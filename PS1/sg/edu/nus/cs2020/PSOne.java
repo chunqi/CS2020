@@ -21,7 +21,10 @@ public class PSOne
 	
 	public static void main(String args[])
 	{
-		int output = MysteryFunction(2, 3);
+		int output = MysteryFunction(5, 5);
 		System.out.printf("The answer is: " + output + ".");
+		//Output: The answer is: 3125.
+		//1.d MysteryFunction is an exponentiation function
+		//where argA is the base and argB is the exponent
 	}
 }
