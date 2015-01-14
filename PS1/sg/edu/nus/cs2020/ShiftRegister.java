@@ -1,7 +1,27 @@
 package sg.edu.nus.cs2020;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * Textual Answers
+ * 
+ * 2.c 	The test should catch the thrown exception and generate a positive response to the expected
+ * 		error inducing case. Unit tests are supposed to check that the code is performing correctly
+ * 		and not let exceptions go uncatched to indicate a correct error response. It should also
+ * 		check that the thrown exception is of the correct type.
+ * 
+ * 2.d	I would take the md5 hash of the password so that I get a fixed length 32 seed for a size 32
+ * 		register. Each bit of the seed will be the parity bit of the 32 hexadecimal digits. The tap
+ * 		will be determined by the last 5 bits of the seed as an integer. For each colour channel of
+ * 		each pixel of the image (assuming 8 bit colour depth), 8 bits will be extracted from the
+ * 		shift register and added to the original magnitude, modulo 255. To decrypt the image the
+ * 		process is repeated and the 8 bits is now deducted from the channel magnitudes instead.
+ * 
+ * 		The mystery image is that of the tutors.
+ */
 
 public class ShiftRegister implements ILFShiftRegister
 {
@@ -27,6 +47,23 @@ public class ShiftRegister implements ILFShiftRegister
 			this.seed = new int[size];
 			this.tap = tap;
 		}
+	}
+	
+	//Alternative constructor
+	public ShiftRegister(String password)
+	{
+		MessageDigest md = null;
+		try
+		{
+			md = MessageDigest.getInstance("MD5");
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			e.printStackTrace();
+		}
+		byte[] digest = md.digest(password.getBytes());
+		digest.toString();
+		this.seed = new int[32];
 	}
 	
 	@Override

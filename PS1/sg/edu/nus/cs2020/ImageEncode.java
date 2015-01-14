@@ -1,11 +1,12 @@
-package cs2020;
+package sg.edu.nus.cs2020;
 
 /**
  * class ImageEncode
  * @author dcsslg
  * Description: Encodes and decodes images using a simple shift-register scheme
  */
-public class ImageEncode {
+public class ImageEncode
+{
 
 	/**
 	 * transform
@@ -13,7 +14,8 @@ public class ImageEncode {
 	 * @param s
 	 * @throws Exception
 	 */
-	static void transform(SimpleImage image, ILFShiftRegister shiftReg) {		
+	static void transform(SimpleImage image, ILFShiftRegister shiftReg)
+	{		
 
 		// If no image, do nothing and return
 		if (image == null) return;
@@ -26,7 +28,8 @@ public class ImageEncode {
 		int iHeight = image.getImgHeight();
 				
 		// Catch all exceptions
-		try{
+		try
+		{
 			// Iterate over every pixel in the image
 			for (int i=0; i<iWidth; i++){
 				for (int j=0; j<iHeight; j++){							
@@ -45,7 +48,8 @@ public class ImageEncode {
 				}
 			}		
 		}
-		catch(Exception e){
+		catch(Exception e)
+		{
 			// Print out any errors
 			System.out.println("Error with transformation: " + e);
 		}		
@@ -55,27 +59,32 @@ public class ImageEncode {
 	 * main procedure
 	 * @param args
 	 */	
-	public static void main(String[] args){
+	public static void main(String[] args)
+	{
 		// Open an image
 		SimpleImage image = new SimpleImage("Mystery Image", "mystery.bmp");
-				
+		
 		// Transform the image using a shift register
-		try{
+		try
+		{
 			// Add your code here to create a shift register.
 			// Use your shift register implementation, and set 
 			// the tap and the correct code.
 			////////////////////////////////
 			
+			//Setup shift register size = 13, tap = 7
+			ILFShiftRegister shiftReg = new ShiftRegister(13, 7);
 			
-			
-			
-			
+			//Note: seed sequence is reversed as seed[0] is LSB
+			int seed[] = {1,1,0,1,0,0,1,1,0,1,1,1,0};
+			shiftReg.setSeed(seed);
 			
 			////////////////////////////////
 			// Transform the image
 			transform(image, shiftReg);			
 		}
-		catch(Exception e){
+		catch(Exception e)
+		{
 			System.out.println("Error in transforming image: " + e);
 		}
 	}	

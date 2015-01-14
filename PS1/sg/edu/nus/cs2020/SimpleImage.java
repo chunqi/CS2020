@@ -1,4 +1,4 @@
-package cs2020;
+package sg.edu.nus.cs2020;
 
 import java.awt.*;
 import java.awt.event.*;
