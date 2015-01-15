@@ -27,7 +27,7 @@
  */
 
 // This class is part of the cs2020 package
-package cs2020;
+package sg.edu.nus.cs2020;
 
 // This class uses the following two packages (for manipulating files)
 import java.io.FileInputStream;
