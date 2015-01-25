@@ -8,7 +8,7 @@ public class MoveToFrontList extends FixedLengthList
 		super(length);
 	}
 	
-	@Override
+	//@Override
 	public boolean search(int key)
 	{
 		//Iterate through entire array
@@ -32,9 +32,8 @@ public class MoveToFrontList extends FixedLengthList
 		return false;
 	}
 	
-	/* Search with negated signals to represent not found
-	@Override
-	public boolean search(int key)
+	//Search with negated signals to represent not found
+	public boolean search2(int key)
 	{
 		for(int x = 0; x < this.m_length; x++)
 		{
@@ -61,5 +60,4 @@ public class MoveToFrontList extends FixedLengthList
 		this.m_list[0] = (-key);
 		return false;
 	}
-	*/
 }

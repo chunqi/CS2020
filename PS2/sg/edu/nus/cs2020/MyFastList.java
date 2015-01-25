@@ -1,37 +1,30 @@
 package sg.edu.nus.cs2020;
 
+import java.util.Arrays;
+
 public class MyFastList extends FixedLengthList
 {
-	protected boolean[] m_bucket;
+	private boolean m_sorted = false;
 	
 	//Call parent constructor with parameter
 	public MyFastList(int length)
 	{
 		super(length);
-		m_bucket = new boolean[1000];
 	}
 	
 	@Override
 	public boolean search(int key)
 	{
-		if(this.m_bucket[key] == true) return true;
+		//Sort list
+		if(this.m_sorted == false)
+		{
+			Arrays.sort(super.m_list);
+			this.m_sorted = true;
+		}
+		
+		//Binary search through entire array
+		int result = Arrays.binarySearch(super.m_list, key);
+		if(result >= 0) return true;
 		else return false;
-	}
-	
-	@Override
-	public boolean add(int key)
-	{		
-		m_max++;
-		if(m_max < m_length)
-		{
-			m_list[m_max] = key;
-			m_bucket[key] = true;
-			return true;
-		}
-		else
-		{
-			System.out.println("Error: list length exceeded.");
-			return false;
-		}
 	}
 }

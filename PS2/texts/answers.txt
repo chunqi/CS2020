@@ -1,29 +1,30 @@
 1.b MyFastList algorithm
-1000 buckets to represent the presence of each possible element. Constant time add and search.
-Elements must be between 0 - 999
+Sort the array (after each add or use a better insertion algorithm)
+Do binary search on the array (should be beast case w/o for random access)
 
-1.c Sumulation results
+1.c Sumulation results on 15" Macbook Pro w/ Retina 2014
 
 =FixedLengthList=
-Total cost random: 0.18245544
-Total cost increasing: 0.31412816
-Total cost decreasing: 0.022111068
+Total cost random: 		0.16317299
+Total cost increasing: 	0.264102
+Total cost decreasing: 	0.046618
 
 =MoveToFrontList= *using arraycopy
-Total cost random: 0.039128825
-Total cost increasing: 0.03764936
-Total cost decreasing: 0.03631925
+Total cost random: 		0.064741
+Total cost increasing: 	0.061937
+Total cost decreasing: 	0.064234
 
 =MoveToFrontList= *with negation signals
-Total cost random: 0.045531154
-Total cost increasing: 0.040070698
-Total cost decreasing: 0.04099048
+Total cost random: 		0.079319
+Total cost increasing: 	0.069114
+Total cost decreasing: 	0.076215
 
-=MyFastList= *using buckets and assuming elements are 0 - 999
-Total cost random: 0.012677032
-Total cost increasing: 0.011258074
-Total cost decreasing: 0.011309053
+=MyFastList= *using binary search on sorted array
+Total cost random: 		0.059765
+Total cost increasing: 	0.05789
+Total cost decreasing: 	0.062768
 
 1.d
 Firstly it prevents storing of negative numbers in the list.
-Secondly the negations also take up space and does not represent actual elements, instead it represents the lack thereof
+Secondly the negations also take up extra space
+The negated numbers also do not represent actual elements, rather lack thereof
