@@ -13,8 +13,9 @@ import java.io.RandomAccessFile;
  * returns records from the file.
  * 
  */
-public class HerbertLog {
-		
+
+public class HerbertLog
+{
 	/**
 	 *  Public static final constants
 	 */
@@ -29,6 +30,7 @@ public class HerbertLog {
 	/**
 	 * Private state for the HerbertLog
 	 */
+	
 	// Filename where the database can be found
 	private String m_name = null;
 	// Variable that points to the database, once opened
@@ -41,6 +43,7 @@ public class HerbertLog {
 	/**
 	 * Debugging information
 	 */
+	
 	// Number of "get" operations performed on the database
 	// Note this is primarily for debugging.
 	protected long m_numGets = 0;
@@ -51,11 +54,14 @@ public class HerbertLog {
 	 * The specified file must exist, and must contain records
 	 * in the proper format. 
 	 **/
-	HerbertLog(String fileName){
+	
+	HerbertLog(String fileName)
+	{
 		// Save the filename
 		m_name = fileName;
 		// Next, we open the file
-		try {
+		try
+		{
 			// Open the file
 			m_file = new File(m_name);
 			m_inRAM = new RandomAccessFile(m_file, "r");
@@ -64,7 +70,9 @@ public class HerbertLog {
 			// dividing the number of characters by the length of each record
 			long numChars = m_inRAM.length();
 			m_numMinutes = numChars/rLength;
-		} catch (IOException e) {
+		}
+		catch(IOException e)
+		{
 			System.out.println("Error opening file: " + e);
 		}
 	}
@@ -73,25 +81,30 @@ public class HerbertLog {
 	 * size
 	 * @return the number of records in the database
 	 */
-	public long numMinutes(){
+	
+	public long numMinutes()
+	{
 		return m_numMinutes;
 	}
 
-        /**
+	/**
 	 * numGets : primarily for debugging
-         * @return number of times get has been called
-         */
-         public long numGets(){
-	         return m_numGets;
-         }
+	 * @return number of times get has been called
+	 */
+	
+	public long numGets()
+	{
+		return m_numGets;
+	}
 
 	/**
 	 * get
 	 * @param i specified the record number to retrieve, starting from 0
 	 * @return the specified record, if it exists, or null otherwise
 	 */
-	public Record get(long i){
-		
+	
+	public Record get(long i)
+	{
 		// Increment the number of "get" operations
 		m_numGets++;
 		
@@ -100,7 +113,8 @@ public class HerbertLog {
 		if (i < 0) return null;
 		
 		// Retrieve the proper record
-		try {
+		try
+		{
 			// First, calculate the offset into the file, and seek to that location
 			long numChars = i*rLength;			
 			m_inRAM.seek(numChars);
@@ -123,14 +137,35 @@ public class HerbertLog {
 			int height = Integer.parseInt(tokens[1]);
 			return new Record(name, height);
 			
-		} catch (IOException e) {
+		}
+		catch(IOException e)
+		{
 			System.out.println("Error getting data from file: " + e);
 		}
 		// If the record wasn't found, for any reason, return null
 		return null;
 	}
 	
-	public static void main(String[] args){
+	public int calculateSalary()
+	{
+		String employer = null;
+		int salary = 0;
+		for(long x = this.numMinutes() - 1; x >= 0; x--)
+		{
+			Record record = this.get(x);
+			if(record.getName().equals(employer)) continue;
+			else
+			{
+				salary += record.getWages();
+				employer = record.getName();
+			}
+		}
 		
+		return salary;
+	}
+	
+	public int calculateMinimumWork(int goal)
+	{
+		return 0;
 	}
 }

@@ -19,21 +19,23 @@ public class HerbertLogTest {
 	 * Verify the correct salary calculated in veryShortNames
 	 */
 	public void testVeryShortNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("veryShortNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/veryShortNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("veryShortNamesTotalSalary", 52, salary);
+		System.out.println("veryShortNames: " + log.numGets() + " for " + log.numMinutes());
 	}
-	
+
 	@Test
 	/**
 	 * Verify the correct salary calculated in shortNames
 	 */
 	public void testShortNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("shortNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/shortNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("shortNamesTotalSalary", 401, salary);
+		System.out.println("shortNames: " + log.numGets() + " for " + log.numMinutes());
 	}
 	
 	@Test
@@ -41,10 +43,11 @@ public class HerbertLogTest {
 	 * Verify the correct salary calculated in vmanyNames
 	 */
 	public void testManyNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("manyNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/manyNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("manyNamesTotalSalary", 47803, salary);
+		System.out.println("manyNames: " + log.numGets() + " for " + log.numMinutes());
 	}
 	
 	@Test
@@ -52,10 +55,11 @@ public class HerbertLogTest {
 	 * Verify the correct salary calculated in longNames
 	 */
 	public void testLongNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("longNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/longNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("longNamesTotalSalary", 2796254, salary);
+		System.out.println("longNames: " + log.numGets() + " for " + log.numMinutes());
 	}
 
 }
