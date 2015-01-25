@@ -199,13 +199,13 @@ public class ListSimulator {
 	 */
 	static public void main(String[] args){
 		// Initialize the three experiments
-		FixedLengthList lRandom = new FixedLengthList(LISTSIZE);		
+		FixedLengthList lRandom = new MoveToFrontList(LISTSIZE);		
 		ListSimulator tRandom = new ListSimulator(TestType.RANDOM, lRandom);
 		
-		FixedLengthList lUp = new FixedLengthList(LISTSIZE);
+		FixedLengthList lUp = new MoveToFrontList(LISTSIZE);
 		ListSimulator tUp = new ListSimulator(TestType.INCREASING, lUp);
 		
-		FixedLengthList lDown = new FixedLengthList(LISTSIZE);
+		FixedLengthList lDown = new MoveToFrontList(LISTSIZE);
 		ListSimulator tDown = new ListSimulator(TestType.DECREASING, lDown);
 
 		// For each of the three experiments, run NUMQERIES searches.
