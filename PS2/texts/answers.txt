@@ -28,3 +28,17 @@ Total cost decreasing: 	0.062768
 Firstly it prevents storing of negative numbers in the list.
 Secondly the negations also take up extra space
 The negated numbers also do not represent actual elements, rather lack thereof
+
+2.a
+I decided to use a sort of binary search method to skip forward the records
+If the skipped to record is still the same person then I would skip even more
+If the person changed then I would reduce the amount skipped and retry
+The smallest skip amount is 0 so if skip is 0 and the next person is different,
+then I have found the last entry for the current guy.
+Each get is cached.
+
+=Number of gets=
+manyNames: 4838 for 8802
+shortNames: 57 for 62
+veryShortNames: 7 for 7
+longNames: 621 for 559528

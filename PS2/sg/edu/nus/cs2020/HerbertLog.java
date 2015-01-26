@@ -4,6 +4,8 @@ package sg.edu.nus.cs2020;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class HerbertLog
@@ -146,10 +148,18 @@ public class HerbertLog
 		return null;
 	}
 	
+	//Wrapper function to call the different versions
 	public int calculateSalary()
+	{
+		return calculateSalaryV2();
+	}
+	
+	private int calculateSalaryV1()
 	{
 		String employer = null;
 		int salary = 0;
+		
+		//Iterate through all records
 		for(long x = this.numMinutes() - 1; x >= 0; x--)
 		{
 			Record record = this.get(x);
@@ -164,8 +174,137 @@ public class HerbertLog
 		return salary;
 	}
 	
+	//Cache all records we get, also maintain a list of start indices
+	private List<Record> cache = new ArrayList<Record>();
+	private List<Integer> cacheIndex = new ArrayList<Integer>();
+	private List<Integer> startIndex = new ArrayList<Integer>();
+	
+	private int calculateSalaryV2()
+	{
+		Record currRecord = this.get(0);
+		
+		//0 is always the start index for the first person
+		startIndex.add(0);
+		
+		//Handle single record case separately
+		if(this.numMinutes() == 1)
+		{
+			return currRecord.getWages();
+		}
+		
+		Record lastRecord = this.get(this.numMinutes() - 1);
+		
+		//Skipping mechanism, numbers chosen sort of equivalent to binary search
+		int[] toSkip = {0, 1, 2, 5, 11, 21, 57, 115, 231, 463, 927, 1855, 3711, 7423, 14847};
+		int skipIndex = 0;
+		int recordIndex = 0;
+		int salary = 0;
+		
+		//Debugging variables
+		int maxSkipIndex = 0;
+		int maxLength = 0;
+		int minLength = 1000000;
+		int numRecords = 0;
+		
+		//Cache first and last records
+		cache.add(currRecord);
+		cache.add(lastRecord);
+		cacheIndex.add(0);
+		cacheIndex.add((int) this.numMinutes() - 1);
+		
+		while(!currRecord.getName().equals(lastRecord.getName()))
+		{
+			//Calculate index of record to skip to
+			int skipRecordIndex = recordIndex + toSkip[skipIndex] + 1;
+			
+			//Bounds check on record index
+			if(skipRecordIndex >= this.numMinutes())
+			{
+				skipIndex--;
+				continue;
+			}
+			
+			//Get the record from cache if available
+			Record skipRecord = null;
+			
+			for(int x = 0; x < cacheIndex.size(); x++)
+			{
+				if(cacheIndex.get(x) == skipRecordIndex)
+				{
+					skipRecord = cache.get(x);
+				}
+			}
+			
+			//Not in cache store the index as well as the record
+			if(skipRecord == null)
+			{
+				skipRecord = this.get(skipRecordIndex);
+				cache.add(skipRecord);
+				cacheIndex.add(skipRecordIndex);
+			}
+			
+			//Checking the name of the current record and the skipped to record
+			if(skipRecord.getName().equals(currRecord.getName()))
+			{
+				//Still the same person so we increment skipIndex and try again
+				if(skipIndex < toSkip.length - 1)
+				{
+					skipIndex++;
+					if(skipIndex > maxSkipIndex) maxSkipIndex = skipIndex;
+				}
+				currRecord = skipRecord;
+				recordIndex = skipRecordIndex;
+			}
+			else
+			{
+				//Reached the next person we need to skip less records
+				if(skipIndex > 0) skipIndex--;
+				else
+				{
+					//Skipping 0 records and reached the next person? Bingo
+					salary += currRecord.getWages();
+					currRecord = skipRecord;
+					
+					//Record skipRecordIndex which is the start of the next person
+					this.startIndex.add(skipRecordIndex);
+					
+					//Record max and min lengths
+					int startIndexLast = this.startIndex.size() - 1;
+					int prevIndex = this.startIndex.get(startIndexLast - 1);
+					int currIndex = this.startIndex.get(startIndexLast);
+					int length = currIndex - prevIndex;
+					if(length > maxLength) maxLength = length;
+					if(length < minLength) minLength = length;
+					//System.out.println(length);
+					numRecords++;
+					
+					//Set to maximum skip index seen
+					skipIndex = maxSkipIndex - 1;
+					//maxSkipIndex = 0;
+				}
+			}
+		}
+		
+		//Debugging prints
+		//System.out.println("maxLength: " + maxLength);
+		//System.out.println("minLength: " + minLength);
+		//System.out.println("numRecords: " + numRecords);
+		
+		//Remember to add last record
+		salary += lastRecord.getWages();
+		
+		return salary;
+	}
+	
 	public int calculateMinimumWork(int goal)
 	{
+		//Calculate max salary available
+		int maxSalary = this.calculateSalary();
+		
+		if(maxSalary < goal) return -1;
+		
+		
+		
 		return 0;
 	}
 }

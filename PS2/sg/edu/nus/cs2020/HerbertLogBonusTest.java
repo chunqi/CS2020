@@ -19,7 +19,7 @@ public class HerbertLogBonusTest {
 	 * Verify the correct salary calculated in veryShortNames
 	 */
 	public void testVeryShortNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("veryShortNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/veryShortNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("veryShortNamesTotalSalary", 52, salary);
@@ -30,7 +30,7 @@ public class HerbertLogBonusTest {
 	 * Verify the correct salary calculated in shortNames
 	 */
 	public void testShortNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("shortNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/shortNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("shortNamesTotalSalary", 401, salary);
@@ -41,7 +41,7 @@ public class HerbertLogBonusTest {
 	 * Verify the correct salary calculated in vmanyNames
 	 */
 	public void testManyNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("manyNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/manyNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("manyNamesTotalSalary", 47803, salary);
@@ -52,7 +52,7 @@ public class HerbertLogBonusTest {
 	 * Verify the correct salary calculated in longNames
 	 */
 	public void testLongNamesTotalSalary() {
-		HerbertLog log = new HerbertLog("longNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/longNamesHerbert.txt");
 		
 		int salary = log.calculateSalary();
 		assertEquals("longNamesTotalSalary", 2796254, salary);
@@ -61,7 +61,7 @@ public class HerbertLogBonusTest {
 	
 	@Test
 	public void testVeryShortNamesGoalIncome() {
-		HerbertLog log = new HerbertLog("veryShortNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/veryShortNamesHerbert.txt");
 		
 		int numMinutes = log.calculateMinimumWork(52);
 		assertEquals("veryShortNamesGoalIncome - $52", 2, numMinutes);
@@ -75,7 +75,7 @@ public class HerbertLogBonusTest {
 	
 	@Test
 	public void testShortNamesGoalIncome() {
-		HerbertLog log = new HerbertLog("shortNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/shortNamesHerbert.txt");
 		
 		int numMinutes = log.calculateMinimumWork(401);
 		assertEquals("shortNamesGoalIncome - $401", 5, numMinutes);
@@ -92,7 +92,7 @@ public class HerbertLogBonusTest {
 	
 	@Test
 	public void testManyNamesGoalIncome() {
-		HerbertLog log = new HerbertLog("manyNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/manyNamesHerbert.txt");
 		
 		int numMinutes = log.calculateMinimumWork(47803);
 		assertEquals("manyNamesGoalIncome - $47803", 20, numMinutes);
@@ -109,7 +109,7 @@ public class HerbertLogBonusTest {
 	
 	@Test
 	public void testLongNamesGoalIncome() {
-		HerbertLog log = new HerbertLog("longNamesHerbert.txt");
+		HerbertLog log = new HerbertLog("texts/longNamesHerbert.txt");
 		
 		int numMinutes = log.calculateMinimumWork(2796254);
 		assertEquals("longNamesGoalIncome - $2796254", 42399, numMinutes);
