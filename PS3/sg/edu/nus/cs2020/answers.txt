@@ -1,0 +1,53 @@
+SorterA:	Mr. InsertionSort - Worst case performance on reverse sorted test case
+SorterB:	Ms. SelectionSort - Consistent time performance on all test cases of similar sizes
+SorterC:	Ms. MergeSort - By elimination, and also because statistically merge sort should perform
+			better than quick sort on random test case
+SorterD:	Dr. Evil - Failed to sort a test case
+SorterE:	Mr. Quicksort - Optimal performance on random test case and terrible on nearly sorted arrays,
+			implying a sub-optimal pivot chosen
+SorterF:	Mr. BubbleSort - Very fast in off by one (front) but extremely slow in off by one (back) as
+			well as reverse sorted test case
+			
+Sample Run:
+=ArrayOneOff(f)=
+SorterA PASS: 0.006789237
+SorterB PASS: 0.7260704
+SorterC PASS: 0.25127047
+SorterD FAIL: 0.06681532
+SorterE PASS: 6.110436
+SorterF PASS: 0.008078741
+=ArrayOneOff(b)=
+SorterA PASS: 7.67117E-4
+SorterB PASS: 0.7191041
+SorterC PASS: 0.23718597
+SorterD PASS: 0.018221656
+SorterE PASS: 6.0912123
+SorterF PASS: 24.58223
+=ArrayRandom=
+SorterA PASS: 0.11541877
+SorterB PASS: 0.043786604
+SorterC PASS: 0.031435363
+SorterD PASS: 0.001881922
+SorterE PASS: 0.0743174
+SorterF PASS: 0.7999373
+=ArrayRandom=
+SorterA PASS: 0.10826668
+SorterB PASS: 0.04459837
+SorterC PASS: 0.040628064
+SorterD PASS: 0.002193937
+SorterE PASS: 0.06431702
+SorterF PASS: 0.8069727
+=ArraySorted=
+SorterA PASS: 3.02947E-4
+SorterB PASS: 0.7668223
+SorterC PASS: 0.24216413
+SorterD FAIL: 0.018462485
+SorterE PASS: 6.2883945
+SorterF PASS: 3.32489E-4
+=ArrayReverse=
+SorterA PASS: 22.160654
+SorterB PASS: 0.71816885
+SorterC PASS: 0.2412725
+SorterD PASS: 0.019030537
+SorterE PASS: 7.1273212
+SorterF PASS: 36.4138
