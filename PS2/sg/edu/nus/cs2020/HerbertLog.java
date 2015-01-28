@@ -298,13 +298,31 @@ public class HerbertLog
 	
 	public int calculateMinimumWork(int goal)
 	{
+		int minMinutes = 0;
+		int salaryCount = 0;
+		
 		//Calculate max salary available
 		int maxSalary = this.calculateSalary();
 		
 		if(maxSalary < goal) return -1;
 		
+		//Calculate number of records each person has
+		List<Integer> recordLengths = new ArrayList<Integer>();
+		for(int x = 1; x < this.startIndex.size(); x++)
+		{
+			recordLengths.add(startIndex.get(x) - startIndex.get(x - 1));
+		}
+		recordLengths.add((int) this.numMinutes() - startIndex.get(startIndex.size() - 1));
 		
+		while(salaryCount < goal)
+		{
+			minMinutes++;
+			for(int x = 0; x < startIndex.size(); x++)
+			{
+				
+			}
+		}
 		
-		return 0;
+		return minMinutes;
 	}
 }
