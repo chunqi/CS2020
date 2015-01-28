@@ -1,18 +1,28 @@
 package sg.edu.nus.cs2020;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Test;
 
 public class SortersTest
 {
-	public boolean isStable()
+	public static boolean isStable(ISort sorter, int size)
 	{
-		return false;
+		//Create a new random indexed test case
+		IndexedInteger[] test = arrayRandomIndexed(size);
+		sorter.sort(test);
+		
+		for(int x = 1; x < test.length; x++)
+		{
+			//If the values are the same
+			if(test[x].getValue() == test[x - 1].getValue())
+			{
+				//Smaller index later means unstable sort
+				if(test[x].getIndex() < test[x - 1].getIndex()) return false;
+				else continue;
+			}
+		}
+		
+		return true;
 	}
 	
 	public boolean checkSorted(ISort sorter, int size)
@@ -50,6 +60,16 @@ public class SortersTest
 		
 		//Floating point rounding will result in repeated numbers for large size
 		for(int x = 0; x < size; x++) array[x] = (int) (Math.random() * size);
+		
+		return array;
+	}
+	
+	//Same as above except each element is indexed to test for sorting stability
+	private static IndexedInteger[] arrayRandomIndexed(int size)
+	{
+		IndexedInteger[] array = new IndexedInteger[size];
+		
+		for(int x = 0; x < size; x++) array[x] = new IndexedInteger(x, (int) (Math.random() * size));
 		
 		return array;
 	}
@@ -94,10 +114,44 @@ public class SortersTest
 		return array;
 	}
 	
+	static class IndexedInteger implements Comparable<IndexedInteger>
+	{
+		private int index;
+		private int value;
+		
+		public IndexedInteger(int index, int value)
+		{
+			this.index = index;
+			this.value = value;
+		}
+		
+		public int getIndex() {return this.index;}
+		public int getValue() {return this.value;}
+		
+		public int compareTo(IndexedInteger other)
+		{
+			if(this.value < other.getValue()) return -1;
+			else if(this.value == other.getValue()) return 0;
+			else return 1;
+		}
+	}
+	
+	private static void testStability(List<ISort> sorters, String[] sorterNames, int size)
+	{
+		for(int x = 0; x < sorters.size(); x++)
+		{
+			String result;
+			if(isStable(sorters.get(x), size)) result = "YStable";
+			else result = "NStable";
+			System.out.println(sorterNames[x] + " is " + result);
+		}
+	}
+	
 	public static void main (String[] args)
 	{
 		StopWatch stopWatch = new StopWatch();
 		
+		//Create a list of test cases using the functions
 		List<Integer[]> testCases = new ArrayList<Integer[]>();
 		testCases.add(arrayOneOff(TEST_MAX_SIZE, true));
 		testCases.add(arrayOneOff(TEST_MAX_SIZE, false));
@@ -107,6 +161,7 @@ public class SortersTest
 		testCases.add(arrayReverse(TEST_MAX_SIZE));
 		String[] testNames = {"ArrayOneOff(f)", "ArrayOneOff(b)", "ArrayRandom", "ArrayRandom", "ArraySorted", "ArrayReverse"};
 		
+		//Create a list of sorters for easier reference
 		List<ISort> sorters = new ArrayList<ISort>();
 		sorters.add(new SorterA());
 		sorters.add(new SorterB());
@@ -116,20 +171,28 @@ public class SortersTest
 		sorters.add(new SorterF());
 		String[] sorterNames = {"SorterA", "SorterB", "SorterC", "SorterD", "SorterE", "SorterF"};
 		
+		//Test the sort stability of each sorter
+		testStability(sorters, sorterNames, TEST_MED_SIZE);
+		
+		//Go through each test case
 		for(int x = 0; x < testCases.size(); x++)
 		{
 			System.out.println("=" + testNames[x] + "=");
+			//For each sorter
 			for(int y = 0; y < sorters.size(); y++)
 			{
+				//Make a copy of the test case since sort is in-place
 				Integer[] testCase = testCases.get(x);
 				Integer[] testCopy = new Integer[testCase.length];
 				System.arraycopy(testCase, 0, testCopy, 0, testCase.length);
 				
+				//Time the sort
 				stopWatch.reset();
 				stopWatch.start();
 				sorters.get(y).sort(testCopy);
 				stopWatch.stop();
 				
+				//Check if the result is actually sorted
 				String result;
 				if(checkSorted(testCopy)) result = "PASS";
 				else result = "FAIL";

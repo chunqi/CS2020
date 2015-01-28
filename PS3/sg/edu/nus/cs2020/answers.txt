@@ -1,53 +1,60 @@
-SorterA:	Mr. InsertionSort - Worst case performance on reverse sorted test case
-SorterB:	Ms. SelectionSort - Consistent time performance on all test cases of similar sizes
+SorterA:	Mr. InsertionSort - Worst case performance on reverse sorted test case; Known stable
+SorterB:	Ms. SelectionSort - Consistent time performance on all test cases of similar sizes; Known
+			not stable
 SorterC:	Ms. MergeSort - By elimination, and also because statistically merge sort should perform
-			better than quick sort on random test case
+			better than quick sort on random test case; Most implementations stable
 SorterD:	Dr. Evil - Failed to sort a test case
 SorterE:	Mr. Quicksort - Optimal performance on random test case and terrible on nearly sorted arrays,
-			implying a sub-optimal pivot chosen
+			implying a sub-optimal pivot chosen; Known not stable
 SorterF:	Mr. BubbleSort - Very fast in off by one (front) but extremely slow in off by one (back) as
-			well as reverse sorted test case
+			well as reverse sorted test case; Known stable
 			
 Sample Run:
+SorterA is YStable
+SorterB is NStable
+SorterC is YStable
+SorterD is NStable
+SorterE is NStable
+SorterF is YStable
 =ArrayOneOff(f)=
-SorterA PASS: 0.006789237
-SorterB PASS: 0.7260704
-SorterC PASS: 0.25127047
-SorterD FAIL: 0.06681532
-SorterE PASS: 6.110436
-SorterF PASS: 0.008078741
+SorterA PASS: 0.00687832
+SorterB PASS: 0.74989927
+SorterC PASS: 0.26515704
+SorterD PASS: 0.15564513
+SorterE PASS: 8.743489
+SorterF PASS: 0.011392153
 =ArrayOneOff(b)=
-SorterA PASS: 7.67117E-4
-SorterB PASS: 0.7191041
-SorterC PASS: 0.23718597
-SorterD PASS: 0.018221656
-SorterE PASS: 6.0912123
-SorterF PASS: 24.58223
+SorterA PASS: 9.80405E-4
+SorterB PASS: 0.7583863
+SorterC PASS: 0.25363484
+SorterD PASS: 0.022983477
+SorterE PASS: 8.846578
+SorterF PASS: 26.847696
 =ArrayRandom=
-SorterA PASS: 0.11541877
-SorterB PASS: 0.043786604
-SorterC PASS: 0.031435363
-SorterD PASS: 0.001881922
-SorterE PASS: 0.0743174
-SorterF PASS: 0.7999373
+SorterA PASS: 0.14325616
+SorterB PASS: 0.052543815
+SorterC PASS: 0.029121675
+SorterD PASS: 0.002254471
+SorterE PASS: 0.09354405
+SorterF PASS: 0.89285374
 =ArrayRandom=
-SorterA PASS: 0.10826668
-SorterB PASS: 0.04459837
-SorterC PASS: 0.040628064
-SorterD PASS: 0.002193937
-SorterE PASS: 0.06431702
-SorterF PASS: 0.8069727
+SorterA PASS: 0.15990217
+SorterB PASS: 0.051346473
+SorterC PASS: 0.03738884
+SorterD PASS: 0.003235794
+SorterE PASS: 0.08991721
+SorterF PASS: 0.8897784
 =ArraySorted=
-SorterA PASS: 3.02947E-4
-SorterB PASS: 0.7668223
-SorterC PASS: 0.24216413
-SorterD FAIL: 0.018462485
-SorterE PASS: 6.2883945
-SorterF PASS: 3.32489E-4
+SorterA PASS: 5.024E-4
+SorterB PASS: 0.7483665
+SorterC PASS: 0.25481838
+SorterD PASS: 0.020259636
+SorterE PASS: 8.374269
+SorterF PASS: 2.85732E-4
 =ArrayReverse=
-SorterA PASS: 22.160654
-SorterB PASS: 0.71816885
-SorterC PASS: 0.2412725
-SorterD PASS: 0.019030537
-SorterE PASS: 7.1273212
-SorterF PASS: 36.4138
+SorterA PASS: 29.796022
+SorterB PASS: 0.7955722
+SorterC PASS: 0.26457146
+SorterD FAIL: 0.020485152
+SorterE PASS: 9.743395
+SorterF PASS: 37.250866
