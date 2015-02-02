@@ -3,8 +3,18 @@ package sg.edu.nus.cs2020;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class containing methods to test the stability and correctness of sorters that implement the {@link ISort} interface. The {@link #main} method profiles and outputs performance numbers.
+ * @author Zhu Chunqi
+ */
 public class SortersTest
 {
+	/**
+	 * Checks if the provided sorter is stable when sorting a random array of the chosen size
+	 * @param sorter Sorter object implementing the {@link ISort} interface
+	 * @param size Size of test array to use
+	 * @return {@code true} if sorter is stable, {@code false} otherwise
+	 */
 	public static boolean isStable(ISort sorter, int size)
 	{
 		//Create a new random indexed test case
@@ -25,6 +35,14 @@ public class SortersTest
 		return true;
 	}
 	
+	/**
+	 * Checks if the provided sorter correctly sorts a random array of the chosen size
+	 * <br><br>
+	 * Uses the overloaded function {@link #checkSorted(Integer[])} internally
+	 * @param sorter Sorter object implementing the {@link ISort} interface
+	 * @param size Size of test array to use
+	 * @return {@code true} if test array is correctly sorted, {@code false} otherwise
+	 */
 	public boolean checkSorted(ISort sorter, int size)
 	{
 		//Create a new random test case
@@ -35,6 +53,11 @@ public class SortersTest
 		return checkSorted(test);
 	}
 	
+	/**
+	 * Checks if the provided integer array is correctly sorted in ascending order
+	 * @param array The integer array to check
+	 * @return {@code true} if array is sorted in ascending order, {@code false} otherwise
+	 */
 	private static boolean checkSorted(Integer[] array)
 	{
 		//Checks that array is sorted in ascending order
@@ -53,7 +76,11 @@ public class SortersTest
 	private static final int TEST_MED_SIZE = 10000;
 	private static final int TEST_MAX_SIZE = 100000;
 	
-	//Creates a test case of size with random numbers between 0 and size
+	/**
+	 * Creates a test array containing random (may be repeated) elements between {@code 0} and {@code size}
+	 * @param size Size of array to generate
+	 * @return An array of integers of the chosen size
+	 */
 	private static Integer[] arrayRandom(int size)
 	{
 		Integer[] array = new Integer[size];
@@ -64,7 +91,13 @@ public class SortersTest
 		return array;
 	}
 	
-	//Same as above except each element is indexed to test for sorting stability
+	/**
+	 * Creates a test array containing random (may be repeated) elements between {@code 0} and {@code size}
+	 * <br><br>
+	 * Uses {@link IndexedInteger} as array elements
+	 * @param size Size of array to generate
+	 * @return An array of {@link IndexedIntegers} of the chosen size
+	 */
 	private static IndexedInteger[] arrayRandomIndexed(int size)
 	{
 		IndexedInteger[] array = new IndexedInteger[size];
@@ -74,7 +107,11 @@ public class SortersTest
 		return array;
 	}
 	
-	//Creates a test case where the array is already sorted from 1 to size
+	/**
+	 * Creates a test array that is sorted in ascending order containing elements from {@code 0} to {@code size - 1}
+	 * @param size Size of array to generate
+	 * @return An array of integers of the chosen size
+	 */
 	private static Integer[] arraySorted(int size)
 	{
 		Integer[] array = new Integer[size];
@@ -84,8 +121,11 @@ public class SortersTest
 		return array;
 	}
 	
-	
-	//Creates a test case where the array is reverse sorted from size to 1
+	/**
+	 * Creates a test array that is sorted in descending order containing elements from {@code size} to {@code 1}
+	 * @param size Size of array to generate
+	 * @return An array of integers of the chosen size
+	 */
 	private static Integer[] arrayReverse(int size)
 	{
 		Integer[] array = new Integer[size];
@@ -95,9 +135,12 @@ public class SortersTest
 		return array;
 	}
 	
-	//Creates a test case where the array is almost fully sorted
-	//but array[0] set to size if front is true
-	//or array[size - 1] set to 0 if front is false
+	/**
+	 * Creates a test array that is sorted in ascending order containing elements from {@code 0} to {@code size - 1} but with a single element in the wrong position
+	 * @param size  Size of array to generate
+	 * @param front If {@code true}, {@code array[0]} is set to {@code size}, otherwise {@code array[size - 1]} is set to {@code 0}
+	 * @return  An array of integers of the chosen size
+	 */
 	private static Integer[] arrayOneOff(int size, boolean front)
 	{
 		
@@ -114,7 +157,11 @@ public class SortersTest
 		return array;
 	}
 	
-	static class IndexedInteger implements Comparable<IndexedInteger>
+	/**
+	 * Internally used utility class to allow integer elements to be indexed and check for sorting stability
+	 * @author Zhu Chunqi
+	 */
+	private static class IndexedInteger implements Comparable<IndexedInteger>
 	{
 		private int index;
 		private int value;
@@ -136,6 +183,14 @@ public class SortersTest
 		}
 	}
 	
+	/**
+	 * Programmatically test a provided array of sorters for sorting stability and prints results
+	 * <br><br>
+	 * Uses the function {@link #isStable} internally
+	 * @param sorters Array of sorters which implement the ISort interface
+	 * @param sorterNames Array of strings containing the names of the sorters (Must be the same length as sorters)
+	 * @param size Number of entries in the test array
+	 */
 	private static void testStability(List<ISort> sorters, String[] sorterNames, int size)
 	{
 		for(int x = 0; x < sorters.size(); x++)
@@ -147,11 +202,20 @@ public class SortersTest
 		}
 	}
 	
+	/**
+	 * Performs several actions:
+	 * <br>
+	 * 1. Creates and instantiates a list of test arrays<br>
+	 * 2. Creates and instantiates one of each unknown sorter<br>
+	 * 3. Tests all sorters for sorting stability<br>
+	 * 4. Prints the time taken for each sorter to sort each test case and also check for correctness
+	 * @param args Command line arguments (unused)
+	 */
 	public static void main (String[] args)
 	{
 		StopWatch stopWatch = new StopWatch();
 		
-		//Create a list of test cases using the functions
+		//Create a list of test cases using the test case creation functions
 		List<Integer[]> testCases = new ArrayList<Integer[]>();
 		testCases.add(arrayOneOff(TEST_MAX_SIZE, true));
 		testCases.add(arrayOneOff(TEST_MAX_SIZE, false));
@@ -171,22 +235,23 @@ public class SortersTest
 		sorters.add(new SorterF());
 		String[] sorterNames = {"SorterA", "SorterB", "SorterC", "SorterD", "SorterE", "SorterF"};
 		
-		//Test the sort stability of each sorter
+		//Test and print the sort stability of each sorter
 		testStability(sorters, sorterNames, TEST_MED_SIZE);
 		
 		//Go through each test case
 		for(int x = 0; x < testCases.size(); x++)
 		{
 			System.out.println("=" + testNames[x] + "=");
-			//For each sorter
+			
+			//Go through each sorter
 			for(int y = 0; y < sorters.size(); y++)
 			{
-				//Make a copy of the test case since sort is in-place
+				//Make a copy of the test case since the sorters sort in-place
 				Integer[] testCase = testCases.get(x);
 				Integer[] testCopy = new Integer[testCase.length];
 				System.arraycopy(testCase, 0, testCopy, 0, testCase.length);
 				
-				//Time the sort
+				//Time the sorter
 				stopWatch.reset();
 				stopWatch.start();
 				sorters.get(y).sort(testCopy);

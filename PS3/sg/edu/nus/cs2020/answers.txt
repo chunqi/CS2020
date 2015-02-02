@@ -1,3 +1,4 @@
+*Properties of each algorithm with reference to Wikipedia
 SorterA:	Mr. InsertionSort - Worst case performance on reverse sorted test case; Known stable
 SorterB:	Ms. SelectionSort - Consistent time performance on all test cases of similar sizes; Known
 			not stable
@@ -8,7 +9,6 @@ SorterE:	Mr. Quicksort - Optimal performance on random test case and terrible on
 			implying a sub-optimal pivot chosen; Known not stable
 SorterF:	Mr. BubbleSort - Very fast in off by one (front) but extremely slow in off by one (back) as
 			well as reverse sorted test case; Known stable
-			
 Sample Run:
 SorterA is YStable
 SorterB is NStable

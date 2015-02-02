@@ -109,7 +109,7 @@ public class LargeCellularTestCases {
 	 */
 	private void ReadFile()
 	{		
-		final String fileName = "testcases.txt";
+		final String fileName = "sg/edu/nus/cs2020/testcases.txt";
 		final String NEWCASE = "NEW_CASE";
 		
 		// Declare and initialize variables 
