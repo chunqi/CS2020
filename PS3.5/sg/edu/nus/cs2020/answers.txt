@@ -1,0 +1,16 @@
+1.a My algorithm is bubble sort over the pages and has a phase complexity of at most O(k) if there are 2k pages and k servers.
+
+Let t be the current phase
+In each phase the servers are assigned the pages t + (server_id * 2) and t + (server_id * 2) + 1 modulo the total number of pages. As the sorting is strictly ascending without regard for the page index, the last server ensures that pageTwo is stricly greater than pageOne or it will sort pageOne only.
+
+After each phase, all elements that were in the wrong page will have shifted by one page towards their correct page position. By running as many phases as there are pages, all elements will be in their correct page and sorted accordingly within the page at the end.
+
+1.c Each cloud server can return the maximum and minimum element for each phase and those elements can be immediately swapped to their correct locations in the first and last page respectively. At the last phase the first and last page can be excluded from the schedule as they are already sorted.
+
+2.a The probability of picking all red balls for all k tries is 0.99^k The probability of picking a single blue ball in k tries is therefore 1 - 0.99^k We want that probability to be > 99% and thus 1 - 0.99^k > 0.99 Solving the inequality we get k = 459.
+
+2.b For k1 and k2 to be found it means that for every middle checked, k1 and k2 lies on the correct side of the middle element. Lets say s1 is in the left half and s2 is in the right half, then k1 < middle < k2 and vice versa. If k1 and k2 are on the same half for the initial middle element, then there will be a level down the binary search where they will be on different halfs and the same argument as above applies, i.e. k1 < middle < k2 if s1 is in the left half and s2 is in the right half and vice versa.
+
+2.c The first point is trivial because binary search is provably 100% correct if the list is correctly sorted.
+
+If the list is not properly sorted, then binary search will not succeed 100% of the time, lets call this probability of success p. We can determine k to satisfy the 99% accuracy requirement the same as in part a, by solving for 1 - p^k > 0.99
