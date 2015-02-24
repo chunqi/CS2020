@@ -1,0 +1,59 @@
+1.b
+In the general case, the binary tree can be simplified in representation to be as below:
+
+		 n			L0
+		/ \
+	2n/3	n/3		L1
+	/ \
+n/3		n/3			L2
+
+L0 need not be the root node and the numbers are just an example
+
+Recurse upon the following rules until the desired node is found:
+
+Case 1:	The right L1 node count is < n/3.
+		We simply discard the right L1 node and search in the subtree of the left L1 node.
+		(The left subtree root node now becomes L0)
+		
+Case 2: The right L1 node count is > n/3.
+		If the right L1 node count is > n/3 and <= 2n/3 then that is the node we are looking for.
+		If the count is > 2n/3 then we discard the left L1 node since its count is < n/3 and search in the right subtree.
+		
+Case 3: The left L1 node count = 2n/3 and is perfectly balanced.
+		The upper bound includes 2n/3 therefore it is the node we are looking for.
+		
+1.d
+===DB0===
+Num Objects: 8
+Max Guesses: 3
+Min Guesses: 3
+Avg Guesses: 3.0
+===DB1===
+Num Objects: 64
+Max Guesses: 7
+Min Guesses: 5
+Avg Guesses: 6.0
+===DB2===
+Num Objects: 128
+Max Guesses: 9
+Min Guesses: 6
+Avg Guesses: 7.0
+===DB3===
+Num Objects: 256
+Max Guesses: 12
+Min Guesses: 6
+Avg Guesses: 8.0
+===DB4===
+Num Objects: 256
+Max Guesses: 11
+Min Guesses: 6
+Avg Guesses: 8.0
+===DB5===
+Num Objects: 1024
+Max Guesses: 14
+Min Guesses: 8
+Avg Guesses: 10.0
+
+1.e
+The game can be turned around to become something like Jeopardy! where the answer is given and the player is supposed to come up with the question.
+In this case the tree traversal is reversed.
