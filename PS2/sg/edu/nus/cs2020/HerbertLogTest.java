@@ -61,5 +61,13 @@ public class HerbertLogTest {
 		assertEquals("longNamesTotalSalary", 2796254, salary);
 		System.out.println("longNames: " + log.numGets() + " for " + log.numMinutes());
 	}
-
+	
+	@Test
+	public void test() {
+		HerbertLog log = new HerbertLog("texts/FridayHerbert.txt");
+		System.out.println("salary: " + log.calculateSalary());
+		for(int x = 0; x < 10; x++) {
+			System.out.println("Goal " + x + ":" + log.calculateMinimumWork(x));
+		}
+	}
 }

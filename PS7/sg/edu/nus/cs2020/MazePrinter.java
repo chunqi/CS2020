@@ -23,6 +23,10 @@ public class MazePrinter {
 	};
 
 	static void printMaze(Maze maze) {
+		for(int i = 0; i < maze.getColumns(); i++) {
+			System.out.print(" " + i);
+		}
+		System.out.print("\n");
 		for (int i = 0; i < maze.getRows(); ++i) {
 			System.out.print(PrinterBlocks.WALL.val());
 			for (int j = 0; j < maze.getColumns(); ++j) {
@@ -62,7 +66,7 @@ public class MazePrinter {
 					System.out.print(PrinterBlocks.AIR.val());
 				}
 			}
-			System.out.println(PrinterBlocks.WALL.val());
+			System.out.println(PrinterBlocks.WALL.val() + " " + i);
 		}
 
 		for (int j = 0; j < maze.getColumns() * 2 + 1; ++j) {

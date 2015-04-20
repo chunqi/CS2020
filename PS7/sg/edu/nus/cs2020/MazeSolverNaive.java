@@ -114,11 +114,11 @@ public class MazeSolverNaive implements IMazeSolver {
 	
 	public static void main(String [] args) {
 		try {
-			Maze maze = Maze.readMaze("sg/edu/nus/cs2020/maze.txt");
+			Maze maze = Maze.readMaze("sg/edu/nus/cs2020/maze-test.txt");
 			IMazeSolver solver = new MazeSolverNaive();
 			
 			solver.initialize(maze);
-			System.out.println( solver.pathSearch(0, 0, 3, 3) );
+			System.out.println( solver.pathSearch(0, 0, 2, 2) );
 			MazePrinter.printMaze(maze);
 			
 			System.out.println();

@@ -1,4 +1,4 @@
-package cs2020;
+package sg.edu.nus.cs2020;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -190,7 +190,7 @@ public class TSPMap {
 		}
 		
 		// Draw the graph
-		redraw();
+		//redraw();
 	}
 	
 	/**

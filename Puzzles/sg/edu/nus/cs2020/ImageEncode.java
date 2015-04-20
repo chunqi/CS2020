@@ -5,7 +5,8 @@ package sg.edu.nus.cs2020;
  * @author dcsslg
  * Description: Encodes and decodes images using a simple shift-register scheme
  */
-public class ImageEncode {
+public class ImageEncode
+{
 
 	/**
 	 * transform
@@ -13,20 +14,19 @@ public class ImageEncode {
 	 * @param s
 	 * @throws Exception
 	 */
-	static void transform(SimpleImage image, ILFShiftRegister shiftReg) {		
+	static void transform(SimpleImage image)
+	{		
 
 		// If no image, do nothing and return
 		if (image == null) return;
-		
-		// If no shift register, do nothing and return
-		if (shiftReg == null) return;
 		
 		// Get the height and width of the image
 		int iWidth = image.getImgWidth();
 		int iHeight = image.getImgHeight();
 				
 		// Catch all exceptions
-		try{
+		try
+		{
 			// Iterate over every pixel in the image
 			for (int i=0; i<iWidth; i++){
 				for (int j=0; j<iHeight; j++){							
@@ -35,17 +35,35 @@ public class ImageEncode {
 					int green = image.getGreen(j,i);
 					int blue = image.getBlue(j,i);
 					
-					// For each color component, XOR the value with 8 bits generated from the shift register
-					red = (red ^ shiftReg.generate(8));
-					green = (green ^ shiftReg.generate(8));
-					blue = (blue ^ shiftReg.generate(8));
-										
+					//Mark the LSB that hide data
+					blue = blue % 2 == 0 ? 0 : 255;
+					
+					//Draw red lines to visualize data stride
+					if(j % 8 == 0) red = 255;
+					
+					//Bits 0 - 7 empty
+					//Bits 8 - 15 data
+					if(j % 16 == 0 && i < 3) {
+						int eightBitByte = 0;
+						
+						//Decode the byte data
+						for(int x = 8; x < 16; x++) {
+							int LSB = image.getBlue(j + x, i) % 2;
+							eightBitByte = eightBitByte << 1;
+							eightBitByte = eightBitByte | LSB;
+						}
+						
+						//System.out.println("Byte @ " + j + ": " + (char) eightBitByte);
+						System.out.print((char) eightBitByte);
+					}
+					
 					// Update the image
 					image.setRGB(j,i,red,green,blue);
 				}
-			}		
+			}
 		}
-		catch(Exception e){
+		catch(Exception e)
+		{
 			// Print out any errors
 			System.out.println("Error with transformation: " + e);
 		}		
@@ -55,28 +73,18 @@ public class ImageEncode {
 	 * main procedure
 	 * @param args
 	 */	
-	public static void main(String[] args){
+	public static void main(String[] args)
+	{
 		// Open an image
 		SimpleImage image = new SimpleImage("Mystery Image", "mystery.bmp");
-				
+		
 		// Transform the image using a shift register
-		try{
-			// Add your code here to create a shift register.
-			// Use your shift register implementation, and set 
-			// the tap and the correct code.
-			////////////////////////////////
-			
-			ILFShiftRegister shiftReg = new ShiftRegister(13, 7);
-			
-			int[] seed = {1,1,0,1,0,0,1,1,0,1,1,1,0};
-			
-			shiftReg.setSeed(seed);
-			
-			////////////////////////////////
-			// Transform the image
-			transform(image, shiftReg);			
+		try
+		{
+			transform(image);			
 		}
-		catch(Exception e){
+		catch(Exception e)
+		{
 			System.out.println("Error in transforming image: " + e);
 		}
 	}	
