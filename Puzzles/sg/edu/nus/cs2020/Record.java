@@ -9,7 +9,7 @@ package sg.edu.nus.cs2020;
  * 
  *
  */
-public class Record {
+public class Record implements Comparable<Record> {
 
         // Name of person who hired Herbert for the current job
 	String m_name;
@@ -38,6 +38,15 @@ public class Record {
         // Returns the wages associated with this record
 	int getWages(){
 		return m_wages;
+	}
+
+	@Override
+	public int compareTo(Record record) {
+		int intCmp = new Integer(this.m_wages).compareTo(record.getWages());
+		if(intCmp == 0) {
+			return new Character(this.m_name.charAt(0)).compareTo(record.getName().charAt(0));
+		}
+		else return intCmp;
 	}
 	
 }

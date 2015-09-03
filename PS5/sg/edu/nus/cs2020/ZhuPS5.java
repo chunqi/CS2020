@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class ZhuPS5
 		
 		//For debugging with sample input
 		if(args.length > 0) filename = args[0];
-		else filename = "sg/edu/nus/cs2020/4.in.txt";
+		else filename = "8.in.txt";
 		
 		//Instantiate FileReader and BufferedReader
 		try
@@ -72,7 +73,7 @@ public class ZhuPS5
 		private int m_size;
 		private int m_duplicatesCount;
 		private BufferedReader m_bufferedReader;
-		private Map<Integer, Integer> m_map;
+		private Map<Long, Integer> m_map;
 		private HashFunction m_murmur;
 		
 		/**
@@ -112,10 +113,10 @@ public class ZhuPS5
 			}
 			
 			//Instantiate HashMap with 2 * m_size capacity
-			m_map = new HashMap<Integer, Integer>(2 * m_size);
+			m_map = new HashMap<Long, Integer>(2 * m_size);
 			
 			//Instantiate murmur hash function
-			m_murmur = Hashing.murmur3_32();
+			m_murmur = Hashing.murmur3_128();
 			
 			countDuplicates();
 		}
@@ -152,7 +153,9 @@ public class ZhuPS5
 					//String key = getHashShort(getCharCounts(nextLine));
 					//long key = getHashCRC(getCharCounts(nextLine));
 					//int key = getHashPrimeModulo(getCharCounts(nextLine));
-					int key = getHashMurmur(getCharCounts(nextLine));
+					//long key = getHashMurmur(nextLine);//getHashMurmur(getCharCounts(nextLine));
+					long key = getHashMurmur(getCharCounts(nextLine));
+					//int key = nextLine.hashCode();
 					
 					//If the key is already in the map we increment its count
 					if(m_map.containsKey(key))
@@ -204,13 +207,20 @@ public class ZhuPS5
 			return charCounts;
 		}
 		
+		public long getHashMurmur(String s) {
+			Hasher hasher = m_murmur.newHasher();
+			hasher.putUnencodedChars(s);
+			HashCode hashCode = hasher.hash();
+			return hashCode.asLong();
+		}
+		
 		/**
-		 * Calculates the integer hash given the character counts of a string. Using MurmurHash3 from
+		 * Calculates the long hash given the character counts of a string. Using MurmurHash3 from
 		 * Google.
 		 * @param charCount
 		 * @return
 		 */
-		public int getHashMurmur(int[] charCount)
+		public long getHashMurmur(int[] charCount)
 		{
 			Hasher hasher = m_murmur.newHasher();
 			
@@ -221,7 +231,7 @@ public class ZhuPS5
 			
 			HashCode hash = hasher.hash();
 			
-			return hash.asInt();
+			return hash.asLong();
 		}
 		
 		/**

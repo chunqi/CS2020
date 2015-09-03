@@ -1,18 +1,18 @@
 package sg.edu.nus.cs2020;
 
 import static org.junit.Assert.*;
+import sg.edu.nus.cs2020.ZhuPS5.DuplicatesCounter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.junit.Test;
 
 public class DuplicatesCounterTest
-{
-	private static final String _DIR_PREPEND = "sg/edu/nus/cs2020/";
-	
+{	
 	/*
 	@Test
 	public void hashTest()
@@ -29,12 +29,16 @@ public class DuplicatesCounterTest
 	
 	private int _getDuplicatesCount(String filename)
 	{
+		//Initialize and start stopwatch
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		
 		try
 		{
-			fileReader = new FileReader(_DIR_PREPEND + filename);
+			fileReader = new FileReader(filename);
 		}
 		catch(FileNotFoundException e)
 		{
@@ -43,6 +47,11 @@ public class DuplicatesCounterTest
 		
 		bufferedReader = new BufferedReader(fileReader);	
 		DuplicatesCounter counter = new DuplicatesCounter(bufferedReader);
+		
+		//Stop the stopwatch and output time elapsed
+		stopWatch.stop();
+		BigDecimal timeElapsed = new BigDecimal(stopWatch.getTime());
+		System.out.println("<" + filename + "> took: " + timeElapsed.toPlainString() + "s");
 		
 		return counter.getDuplicatesCount();
 	}
@@ -54,7 +63,7 @@ public class DuplicatesCounterTest
 		
 		try
 		{
-			fileReader = new FileReader(_DIR_PREPEND + filename);
+			fileReader = new FileReader(filename);
 		}
 		catch(FileNotFoundException e)
 		{
@@ -86,7 +95,7 @@ public class DuplicatesCounterTest
 	{
 		int duplicatesCount = _getDuplicatesCount("2.in.txt");
 		int answer = _getAnswer("2.out.txt");
-		System.out.println(duplicatesCount);
+		//System.out.println(duplicatesCount);
 		assertEquals(answer, duplicatesCount);
 	}
 	
@@ -95,7 +104,7 @@ public class DuplicatesCounterTest
 	{
 		int duplicatesCount = _getDuplicatesCount("4.in.txt");
 		int answer = _getAnswer("4.out.txt");
-		System.out.println(duplicatesCount);
+		//System.out.println(duplicatesCount);
 		assertEquals(answer, duplicatesCount);
 	}
 	
@@ -104,7 +113,7 @@ public class DuplicatesCounterTest
 	{
 		int duplicatesCount = _getDuplicatesCount("5.in.txt");
 		int answer = _getAnswer("5.out.txt");
-		System.out.println(duplicatesCount);
+		//System.out.println(duplicatesCount);
 		assertEquals(answer, duplicatesCount);
 	}
 	
@@ -113,7 +122,7 @@ public class DuplicatesCounterTest
 	{
 		int duplicatesCount = _getDuplicatesCount("6.in.txt");
 		int answer = _getAnswer("6.out.txt");
-		System.out.println(duplicatesCount);
+		//System.out.println(duplicatesCount);
 		assertEquals(answer, duplicatesCount);
 	}
 	
@@ -122,7 +131,7 @@ public class DuplicatesCounterTest
 	{
 		int duplicatesCount = _getDuplicatesCount("7.in.txt");
 		int answer = _getAnswer("7.out.txt");
-		System.out.println(duplicatesCount);
+		//System.out.println(duplicatesCount);
 		assertEquals(answer, duplicatesCount);
 	}
 	
@@ -131,7 +140,7 @@ public class DuplicatesCounterTest
 	{
 		int duplicatesCount = _getDuplicatesCount("8.in.txt");
 		int answer = _getAnswer("8.out.txt");
-		System.out.println(duplicatesCount);
+		//System.out.println(duplicatesCount);
 		assertEquals(answer, duplicatesCount);
 	}
 }

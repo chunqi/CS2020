@@ -187,20 +187,20 @@ public abstract class QuestionGameBase {
 			countQueries++;
 			// Get the player's query
 			Query query = m_player.nextGuess();
-			//System.out.println(query);
+			System.out.println("Query: " + query);
 			// See if the query is true or false
 			boolean answer = isSatisfied(query);
-			//System.out.println("Answer: " + answer);
+			System.out.println("Answer: " + answer);
 			// Now update the player
 			m_player.update(query, answer);
 		}
 		
 		// Ok, the player is ready to guess
 		String guess = m_player.guessObject();
-		//System.out.println("You guess: " + guess);
+		System.out.println("You guess: " + guess);
 		// See if they are right!
 		if (guess.compareTo(m_chosenObject.getName())== 0){
-			//System.out.println("You win!");
+			System.out.println("You win!");
 		}
 		else {
 			System.out.println("Loser!");

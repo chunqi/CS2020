@@ -1,65 +1,126 @@
 package sg.edu.nus.cs2020;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 
 import org.junit.Test;
 
 public class HerbertLogTest {
-	@Test
-	public void friday() {
-		HerbertLog log = new HerbertLog("logs/FridayHerbert.txt");
-		
-		HashSet<String> uniqueNames = new HashSet<String>();
-		
-		System.out.println("Num minutes: " + log.numMinutes());
-		
-		for(long x = 0; x < log.numMinutes(); x++) {
-			Record record = log.get(x);
-			
-			uniqueNames.add(record.getName().toLowerCase());
+	public static boolean UPPERCASE = true;
+	public static boolean LOWERCASE = !UPPERCASE;
+	
+	private String int2bin(int n) {
+		String bin = "";
+		for(int x = 0; x < 8; x++) {
+			bin = n % 2 == 0 ? "0" + bin : "1" + bin;
+			n /= 2;
 		}
-		
-		System.out.println("Unique names: " + uniqueNames.size());
-		
-		ArrayList<String> missedNames = new ArrayList<String>();
+		return bin;
+	}
+	
+	private boolean _getCase(String s) {
+		char f = s.charAt(0);
+		if(f <= 'Z' && f >= 'A') return UPPERCASE;
+		else if(f <= 'z' && f >= 'a') return LOWERCASE;
+		else throw new IllegalArgumentException();
+	}
+	
+	public void rewrite() {
+		HerbertLog log = new HerbertLog("FridayHerbert.txt");
 		
 		try {
-			FileReader f = new FileReader("logs/namesFullList.txt");
-			BufferedReader b = new BufferedReader(f);
-			
-			while(b.ready()) {
-				String name = b.readLine();
-				if(!uniqueNames.contains(name.toLowerCase())) {
-					missedNames.add(name.toLowerCase());
-				}
+			FileWriter fileWriter = new FileWriter("input.txt");
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			for(long x = 0; x < log.numMinutes(); x++) {
+				Record record = log.get(x);
+				bufferedWriter.write(record.getWages() + "\n");
 			}
-			
-			b.close();
-			f.close();
+			bufferedWriter.flush();
+			bufferedWriter.close();
+			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Missed names: " + missedNames.size());
-		
-		for(int x = 0; x < missedNames.size(); x++) {
-			System.out.println(missedNames.get(x));
+	}
+	
+	@Test
+	public void sortedRecords() {
+		ArrayList<Record> records = new ArrayList<Record>();
+		HerbertLog log = new HerbertLog("FridayHerbert.txt");
+		for(long x = 0; x < log.numMinutes(); x++) {
+			records.add(log.get(x));
 		}
-		
-		for(int x = 0; x < missedNames.size(); x += 8) {
-			int eightBitByte = 0;
-			for(int y = 0; y < 8; y++) {
-				String name = missedNames.get(x + y);
-				int LSB = name.length() % 2;
-				eightBitByte = eightBitByte << 1;
-				eightBitByte = eightBitByte | LSB;
-				System.out.print(name.length() % 2);
+		Collections.sort(records);
+		for(int x = 0; x < records.size(); x++) {
+			Record record = records.get(x);
+			System.out.println(record.getName() + ": " + record.getWages());
+		}
+	}
+	
+	@Test
+	public void wageCounts() {
+		HerbertLog log = new HerbertLog("FridayHerbert.txt");
+		int[] counts = new int[100];
+		for(long x = 0; x < log.numMinutes(); x++) {
+			Record record = log.get(x);
+			counts[record.getWages()]++;
+		}
+		for(int x = 0; x < counts.length; x++) {
+			System.out.println(x + ":\t" + counts[x] + "\t" + (char) counts[x]);
+		}
+	}
+	
+	@Test
+	public void zeroes() {
+		HerbertLog log = new HerbertLog("FridayHerbert.txt");
+		int count = 0;
+		for(long x = 0; x < log.numMinutes(); x++) {
+			Record record = log.get(x);
+			if(record.getWages() == 0) {
+				System.out.println("==" + record.getName() + ":" + count + "==");
+				count = 0;
 			}
-			System.out.println(": " + (char) eightBitByte + " " + eightBitByte);
+			else {
+				System.out.println(record.getWages() + "\t" + record.getName());
+				count++;
+			}
 		}
+	}
+	
+	@Test
+	public void test() {
+		HerbertLog log = new HerbertLog("FridayHerbert.txt");
+		String employer = "";
+		String upperCase = "";
+		String lowerCase = "";
+		
+		int bitmash = 0;
+		int sum = 0;
+		for(long x = 0; x < log.numMinutes(); x++) {
+			Record record = log.get(x);
+			if(record.getName().compareTo(employer) != 0) {
+				//System.out.println(int2bin(bitmash) + " " + bitmash + " " + (char) bitmash);
+				//System.out.println("Sum: " + sum);
+				bitmash = 0;
+				sum = 0;
+				employer = record.getName();
+				//System.out.println("==" + employer + "==");
+				if(employer.charAt(0) >= 'A' && employer.charAt(0) <= 'Z') {
+					System.out.println(record.getWages());
+				}
+			}
+			int wage = record.getWages();
+			bitmash |= wage;
+			sum += wage;
+			if(wage <= 'Z' && wage >= 'A') upperCase += (char) wage;
+			if(wage <= 'z' && wage >= 'a') lowerCase += (char) wage;
+			//System.out.println(int2bin(record.getWages()) + " " + record.getWages());
+		}
+		System.out.println();
+		//System.out.println(lowerCase);
+		//System.out.println(upperCase);
 	}
 }

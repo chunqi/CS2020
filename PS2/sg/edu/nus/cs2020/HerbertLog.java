@@ -151,7 +151,7 @@ public class HerbertLog
 	//Wrapper function to call the different versions
 	public int calculateSalary()
 	{
-		return calculateSalaryV2();
+		return calculateSalaryV1();
 	}
 	
 	private int calculateSalaryV1()
